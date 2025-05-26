@@ -27,7 +27,7 @@ class CommentController extends ApiController implements HasMiddleware
      */
     public function index()
     {
-        return $this->commentRepo->latest()->builder(fn(Builder $query) => $query->ofCreator(
+        return $this->commentRepo->latest()->builder(fn(Builder $query) => $query->parent()->ofCreator(
             $this->request->user(),
         ))->search()->paginate();
     }
@@ -45,7 +45,9 @@ class CommentController extends ApiController implements HasMiddleware
      */
     public function show(string $id)
     {
-        return $this->commentRepo->findById(value: $id);
+        return $this->commentRepo->builder(fn(Builder $query) => $query->with([
+            'children'
+        ]))->findById(value: $id);
     }
 
     /**
@@ -87,5 +89,10 @@ class CommentController extends ApiController implements HasMiddleware
     public function forceDestroy(string $id)
     {
         return $this->commentRepo->forceDelete(id: $id);
+    }
+
+    public function pin(string $id)
+    {
+        return $this->commentRepo->update(id: $id,data: $this->request->validated());
     }
 }

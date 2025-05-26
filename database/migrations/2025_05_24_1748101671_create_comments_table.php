@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            /**
+             * @var \Callmeaf\Comment\App\Repo\Contracts\CommentRepoInterface $commentRepo
+             */
+            $commentRepo = app(\Callmeaf\Comment\App\Repo\Contracts\CommentRepoInterface::class);
+            $table->foreignId('parent_id')->nullable()->constrained($commentRepo->getTable())->cascadeOnDelete();
             $table->string('status');
-            $table->string('type');
+            $table->string('type')->nullable();
+            $table->boolean('is_pinned');
             $table->nullableMorphs('commentable');
             /**
              * @var \Callmeaf\User\App\Repo\Contracts\UserRepoInterface $userRepo

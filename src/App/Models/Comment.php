@@ -5,6 +5,7 @@ namespace Callmeaf\Comment\App\Models;
 use App\Models\User;
 use Callmeaf\Base\App\Models\BaseModel;
 use Callmeaf\Base\App\Traits\Model\HasDate;
+use Callmeaf\Base\App\Traits\Model\HasParent;
 use Callmeaf\Base\App\Traits\Model\HasStatus;
 use Callmeaf\Base\App\Traits\Model\HasType;
 use Callmeaf\User\App\Repo\Contracts\UserRepoInterface;
@@ -18,11 +19,13 @@ use Illuminate\Support\Facades\Auth;
 class Comment extends BaseModel
 {
      use SoftDeletes;
-     use HasStatus,HasType,HasDate;
+     use HasStatus,HasType,HasDate,HasParent;
 
     protected $fillable = [
         'status',
         'type',
+        'parent_id',
+        'is_pinned',
         'commentable_id',
         'commentable_type',
         'creator_identifier',
@@ -37,6 +40,7 @@ class Comment extends BaseModel
     protected function casts(): array
     {
         return [
+            'is_pinned' => 'boolean',
             ...(self::config()['enums'] ?? []),
         ];
     }

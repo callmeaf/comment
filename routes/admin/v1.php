@@ -17,5 +17,6 @@ Route::apiResource($prefix, $controllers['comment'])->middleware($middleware);
          Route::patch('/type', 'typeUpdate');
          Route::patch('/restore', 'restore');
          Route::delete('/force', 'forceDestroy');
+         Route::patch('/pin', 'pin');
      });
  });

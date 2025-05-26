@@ -25,11 +25,13 @@ class CommentStoreRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(UserRepoInterface $userRepo): array
+    public function rules(UserRepoInterface $userRepo,CommentRepoInterface $commentRepo): array
     {
         return [
             'status' => ['required',new Enum(CommentStatus::class)],
-            'type' => ['required',new Enum(CommentType::class)],
+            'type' => ['nullable',new Enum(CommentType::class)],
+            'parent_id' => ['nullable',Rule::exists($commentRepo->getTable(),$commentRepo->getModel()->getRouteKeyName())],
+            'is_pinned' => ['required','boolean'],
             'creator_identifier' => ['required',Rule::exists($userRepo->getTable(),$userRepo->getModel()->getRouteKeyName())],
             'commentable_id' => ['required','string'],
             'commentable_type' => ['required',Rule::in(\Base::relationMorphMapAlias())],
@@ -44,7 +46,12 @@ class CommentStoreRequest extends FormRequest
             'creator_identifier' => $this->user()->email,
         ]);
         $this->mergeIfMissing([
-            'type' => CommentType::USER_EXPERIENCE->value,
+            'is_pinned' => false,
         ]);
+        if(! $this->get('parent_id')) {
+            $this->mergeIfMissing([
+                'type' => CommentType::USER_EXPERIENCE->value,
+            ]);
+        }
     }
 }
