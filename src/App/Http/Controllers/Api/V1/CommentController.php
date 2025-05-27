@@ -29,9 +29,7 @@ class CommentController extends ApiController implements HasMiddleware
     {
         return $this->commentRepo->latest()->builder(fn(Builder $query) => $query->parent()->ofAuthor(
             $this->request->user(),
-        )->with([
-            'author.image'
-        ]))->search()->paginate();
+        ))->search()->paginate();
     }
 
     /**
@@ -39,13 +37,7 @@ class CommentController extends ApiController implements HasMiddleware
      */
     public function store()
     {
-        $comment = $this->commentRepo->create(data: $this->request->validated());
-
-        $comment->resource->loadMissing([
-            'author.image',
-        ]);
-
-        return $comment;
+        return $this->commentRepo->create(data: $this->request->validated());
     }
 
     /**
@@ -63,13 +55,7 @@ class CommentController extends ApiController implements HasMiddleware
      */
     public function update(string $id)
     {
-        $comment = $this->commentRepo->update(id: $id, data: $this->request->validated());
-
-        $comment->resource->loadMissing([
-            'author.image',
-        ]);
-
-        return $comment;
+        return $this->commentRepo->update(id: $id, data: $this->request->validated());
     }
 
     /**
