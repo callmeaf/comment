@@ -35,7 +35,7 @@ class CommentStoreRequest extends FormRequest
             'creator_identifier' => ['required',Rule::exists($userRepo->getTable(),$userRepo->getModel()->getRouteKeyName())],
             'commentable_id' => ['required','string'],
             'commentable_type' => ['required',Rule::in(\Base::relationMorphMapAlias())],
-            'content' => ['required','string','max:400'],
+            'content' => ['required','string','max:700'],
         ];
     }
 

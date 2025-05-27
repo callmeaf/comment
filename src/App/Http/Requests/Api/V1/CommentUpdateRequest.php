@@ -38,7 +38,7 @@ class CommentUpdateRequest extends FormRequest
     {
         return [
             'status' => ['required',new Enum(CommentStatus::class)],
-            'content' => ['required','string','max:400'],
+            'content' => ['required','string','max:700'],
         ];
     }
 
