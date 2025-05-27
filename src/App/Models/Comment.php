@@ -10,6 +10,7 @@ use Callmeaf\Base\App\Traits\Model\HasStatus;
 use Callmeaf\Base\App\Traits\Model\HasType;
 use Callmeaf\User\App\Repo\Contracts\UserRepoInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -86,5 +87,24 @@ class Comment extends BaseModel
         }
 
         return $this->author_identifier === $author;
+    }
+
+    public function maskedAuthorIdentifier(): Attribute
+    {
+        return Attribute::get(
+            function() {
+                $value = $this->author_identifier;
+                if(userIsSuperAdmin() || request()->query('restrict_key') === \Base::config('restrict_route_middleware_key')) {
+                    return $value;
+                }
+
+                $user = Auth::user();
+
+                if($user && $user->getRouteKey() === $value) {
+                    return $value;
+                }
+                return str($value)->mask('*',-15,5)->toString();
+            }
+        );
     }
 }
