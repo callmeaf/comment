@@ -9,7 +9,7 @@ trait HasComments
 {
     public function comments(): MorphMany
     {
-        return $this->hasMany(self::class,'commentable');
+        return $this->morphMany(self::class,'commentable');
     }
 
     public function approvedComments(): MorphMany
