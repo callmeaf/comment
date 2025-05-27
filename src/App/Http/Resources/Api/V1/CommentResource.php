@@ -33,7 +33,7 @@ class CommentResource extends JsonResource
             'parent_id' => $this->parent_id,
             'commentable_id' => $this->commentable_id,
             'commentable_type' => $this->commentable_type,
-            'author_identifier' => $this->author_identifier,
+            'author_identifier' => $this->maskedAuthorIdentifier,
             'status' => $this->status,
             'status_text' => $this->statusText,
             'type' => $this->type,
