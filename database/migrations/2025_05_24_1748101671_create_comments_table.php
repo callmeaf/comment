@@ -21,7 +21,10 @@ return new class extends Migration
             $table->string('status');
             $table->string('type')->nullable();
             $table->boolean('is_pinned');
-            $table->nullableMorphs('commentable');
+            
+            $table->string('commentable_id')->nullable();
+            $table->string('commentable_type')->nullable();
+            $table->index(['commentable_id','commentable_type']);
             /**
              * @var \Callmeaf\User\App\Repo\Contracts\UserRepoInterface $userRepo
              */
