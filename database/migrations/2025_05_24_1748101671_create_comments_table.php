@@ -29,8 +29,8 @@ return new class extends Migration
              * @var \Callmeaf\User\App\Repo\Contracts\UserRepoInterface $userRepo
              */
             $userRepo = app(\Callmeaf\User\App\Repo\Contracts\UserRepoInterface::class);
-            $table->string('creator_identifier')->nullable()->index();
-            $table->foreign('creator_identifier')->references($userRepo->getModel()->getRouteKeyName())->on($userRepo->getTable())->cascadeOnUpdate()->nullOnDelete();
+            $table->string('author_identifier')->nullable()->index();
+            $table->foreign('author_identifier')->references($userRepo->getModel()->getRouteKeyName())->on($userRepo->getTable())->cascadeOnUpdate()->nullOnDelete();
             $table->text('content');
             $table->softDeletes();
             $table->timestamps();

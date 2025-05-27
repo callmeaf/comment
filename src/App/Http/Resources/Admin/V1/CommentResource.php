@@ -33,7 +33,7 @@ class CommentResource extends JsonResource
             'parent_id' => $this->parent_id,
             'commentable_id' => $this->commentable_id,
             'commentable_type' => $this->commentable_type,
-            'creator_identifier' => $this->creator_identifier,
+            'author_identifier' => $this->author_identifier,
             'status' => $this->status,
             'status_text' => $this->statusText,
             'type' => $this->type,
@@ -46,7 +46,7 @@ class CommentResource extends JsonResource
             'updated_at_text' => $this->updatedAtText(),
             'deleted_at' => $this->deleted_at,
             'deleted_at_text' => $this->deletedAtText(),
-            'creator' => $userRepo->toResource($this->whenLoaded('creator')),
+            'author' => $userRepo->toResource($this->whenLoaded('author')),
             'replies' => $commentRepo->toResourceCollection($this->whenLoaded('children')),
         ];
     }

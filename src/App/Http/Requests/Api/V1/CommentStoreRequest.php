@@ -32,7 +32,7 @@ class CommentStoreRequest extends FormRequest
             'type' => ['nullable',new Enum(CommentType::class)],
             'parent_id' => ['nullable',Rule::exists($commentRepo->getTable(),$commentRepo->getModel()->getRouteKeyName())],
             'is_pinned' => ['required','boolean'],
-            'creator_identifier' => ['required',Rule::exists($userRepo->getTable(),$userRepo->getModel()->getRouteKeyName())],
+            'author_identifier' => ['required',Rule::exists($userRepo->getTable(),$userRepo->getModel()->getRouteKeyName())],
             'commentable_id' => ['required','string'],
             'commentable_type' => ['required',Rule::in(\Base::relationMorphMapAlias())],
             'content' => ['required','string','max:700'],
@@ -43,7 +43,7 @@ class CommentStoreRequest extends FormRequest
     {
         $this->merge([
             'status' => CommentStatus::PENDING->value,
-            'creator_identifier' => $this->user()->email,
+            'author_identifier' => $this->user()->email,
         ]);
         $this->mergeIfMissing([
             'is_pinned' => false,

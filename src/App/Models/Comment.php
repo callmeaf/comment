@@ -28,7 +28,7 @@ class Comment extends BaseModel
         'is_pinned',
         'commentable_id',
         'commentable_type',
-        'creator_identifier',
+        'author_identifier',
         'content'
     ];
 
@@ -47,15 +47,15 @@ class Comment extends BaseModel
 
     /**
      * @param Builder $query
-     * @param string|User $creator
+     * @param string|User $author
      * @return void
      */
-    public function scopeOfCreator(Builder $query,$creator)
+    public function scopeOfAuthor(Builder $query,$author)
     {
-        if($creator instanceof  Model) {
-            $creator = $creator->getRouteKey();
+        if($author instanceof  Model) {
+            $author = $author->getRouteKey();
         }
-        $query->where('creator_identifier',$creator);
+        $query->where('author_identifier',$author);
     }
 
     public function commentable(): MorphTo
@@ -63,28 +63,28 @@ class Comment extends BaseModel
         return $this->morphTo();
     }
 
-    public function creator(): BelongsTo
+    public function author(): BelongsTo
     {
         /**
          * @var UserRepoInterface $userRepo
          */
         $userRepo = app(UserRepoInterface::class);
-        return $this->belongsTo($userRepo->getModel()::class,$userRepo->getModel()->getRouteKeyName(),'creator_identifier');
+        return $this->belongsTo($userRepo->getModel()::class,$userRepo->getModel()->getRouteKeyName(),'author_identifier');
     }
 
     /**
-     * @param null|string|User $creator
+     * @param null|string|User $author
      * @return bool
      */
-    public function canSeeBy($creator = null): bool
+    public function canSeeBy($author = null): bool
     {
-        if(is_null($creator)) {
-            $creator = Auth::user();
+        if(is_null($author)) {
+            $author = Auth::user();
         }
-        if($creator instanceof  Model) {
-            $creator = $creator->getRouteKey();
+        if($author instanceof  Model) {
+            $author = $author->getRouteKey();
         }
 
-        return $this->creator_identifier === $creator;
+        return $this->author_identifier === $author;
     }
 }

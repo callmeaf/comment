@@ -27,7 +27,7 @@ class CommentController extends ApiController implements HasMiddleware
      */
     public function index()
     {
-        return $this->commentRepo->latest()->builder(fn(Builder $query) => $query->parent()->ofCreator(
+        return $this->commentRepo->latest()->builder(fn(Builder $query) => $query->parent()->ofAuthor(
             $this->request->user(),
         ))->search()->paginate();
     }
