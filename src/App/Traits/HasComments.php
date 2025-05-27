@@ -2,6 +2,7 @@
 
 namespace Callmeaf\Comment\App\Traits;
 
+use Callmeaf\Comment\App\Repo\Contracts\CommentRepoInterface;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -9,7 +10,11 @@ trait HasComments
 {
     public function comments(): MorphMany
     {
-        return $this->morphMany(self::class,'commentable');
+        /**
+         * @var CommentRepoInterface $commentRepo
+         */
+        $commentRepo = app(CommentRepoInterface::class);
+        return $this->morphMany($commentRepo->getModel()::class,'commentable');
     }
 
     public function approvedComments(): MorphMany
