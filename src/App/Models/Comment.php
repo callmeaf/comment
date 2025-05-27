@@ -69,7 +69,7 @@ class Comment extends BaseModel
          * @var UserRepoInterface $userRepo
          */
         $userRepo = app(UserRepoInterface::class);
-        return $this->belongsTo($userRepo->getModel()::class,$userRepo->getModel()->getRouteKeyName(),'author_identifier');
+        return $this->belongsTo($userRepo->getModel()::class,'author_identifier',$userRepo->getModel()->getRouteKeyName());
     }
 
     /**
