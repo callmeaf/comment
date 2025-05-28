@@ -95,4 +95,11 @@ class CommentController extends ApiController implements HasMiddleware
     {
         return $this->commentRepo->update(id: $id,data: $this->request->validated());
     }
+
+    public function replies(string $id)
+    {
+        return $this->commentRepo->builder(fn(Builder $query) => $query->childrenOf($id)->with([
+            'author.image'
+        ]))->search()->paginate();
+    }
 }
