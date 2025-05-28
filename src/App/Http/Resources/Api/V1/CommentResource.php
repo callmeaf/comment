@@ -2,6 +2,7 @@
 
 namespace Callmeaf\Comment\App\Http\Resources\Api\V1;
 
+use Callmeaf\Base\App\Enums\DateTimeFormat;
 use Callmeaf\Comment\App\Models\Comment;
 use Callmeaf\Comment\App\Repo\Contracts\CommentRepoInterface;
 use Callmeaf\User\App\Repo\Contracts\UserRepoInterface;
@@ -41,11 +42,11 @@ class CommentResource extends JsonResource
             'is_pinned' => $this->is_pinned,
             'content' => $this->content,
             'created_at' => $this->created_at,
-            'created_at_text' => $this->createdAtText(),
+            'created_at_text' => $this->createdAtText(DateTimeFormat::DATE_TIME),
             'updated_at' => $this->updated_at,
-            'updated_at_text' => $this->updatedAtText(),
+            'updated_at_text' => $this->updatedAtText(DateTimeFormat::DATE_TIME),
             'deleted_at' => $this->deleted_at,
-            'deleted_at_text' => $this->deletedAtText(),
+            'deleted_at_text' => $this->deletedAtText(DateTimeFormat::DATE_TIME),
             'author' => $userRepo->toResource($this->whenLoaded('author')),
             'replies' => $commentRepo->toResourceCollection($this->whenLoaded('children')),
         ];
