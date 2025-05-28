@@ -24,7 +24,7 @@ class CommentStoreRequest extends FormRequest
             $commentRepo = app(CommentRepoInterface::class);
             $comment = $commentRepo->findById($parentId);
 
-            return $comment->resource->isParent();
+            return $comment->resource->isParent() && $comment->resource->isActive();
         }
         return true;
     }
