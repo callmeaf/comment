@@ -17,6 +17,15 @@ class CommentStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if($parentId = $this->get('parent_id')) {
+            /**
+             * @var CommentRepoInterface $commentRepo
+             */
+            $commentRepo = app(CommentRepoInterface::class);
+            $comment = $commentRepo->findById($parentId);
+
+            return $comment->resource->isParent();
+        }
         return true;
     }
 
