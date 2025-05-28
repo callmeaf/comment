@@ -49,6 +49,7 @@ class CommentResource extends JsonResource
             'deleted_at_text' => $this->deletedAtText(DateTimeFormat::DATE_TIME),
             'author' => $userRepo->toResource($this->whenLoaded('author')),
             'replies' => $commentRepo->toResourceCollection($this->whenLoaded('children')),
+            'replies_count' => $this->whenCounted('children')
         ];
     }
 }
