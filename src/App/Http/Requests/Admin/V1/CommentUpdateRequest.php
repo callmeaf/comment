@@ -2,7 +2,10 @@
 
 namespace Callmeaf\Comment\App\Http\Requests\Admin\V1;
 
+use Callmeaf\Comment\App\Enums\CommentStatus;
+use Callmeaf\Comment\App\Enums\CommentType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class CommentUpdateRequest extends FormRequest
 {
@@ -22,7 +25,9 @@ class CommentUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'type' => ['required',new Enum(CommentType::class)],
+            'status' => ['required',new Enum(CommentStatus::class)],
+            'content' => ['required','string','max:700'],
         ];
     }
 }
