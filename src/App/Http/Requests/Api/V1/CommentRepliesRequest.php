@@ -22,7 +22,7 @@ class CommentRepliesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'is_pinned' => ['required','boolean'],
+            //
         ];
     }
 }
