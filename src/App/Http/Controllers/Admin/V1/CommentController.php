@@ -27,7 +27,9 @@ class CommentController extends AdminController implements HasMiddleware
      */
     public function index()
     {
-        return $this->commentRepo->latest()->builder(fn(Builder $query) => $query->parent())->search()->paginate();
+        return $this->commentRepo->latest()->builder(fn(Builder $query) => $query->parent()->with([
+            'author.image'
+        ]))->search()->paginate();
     }
 
     /**
