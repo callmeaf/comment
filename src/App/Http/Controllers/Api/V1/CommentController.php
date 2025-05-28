@@ -98,7 +98,7 @@ class CommentController extends ApiController implements HasMiddleware
 
     public function replies(string $id)
     {
-        return $this->commentRepo->builder(fn(Builder $query) => $query->childrenOf($id)->with([
+        return $this->commentRepo->builder(fn(Builder $query) => $query->childrenOf($id)->where(fn(Builder $builder) => $builder->active()->orWhere('author_identifier',$this->request->user()->getRouteKey()))->with([
             'author.image'
         ]))->search()->paginate();
     }
