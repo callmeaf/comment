@@ -17,11 +17,8 @@ class CommentDestroyRequest extends FormRequest
          * @var CommentRepoInterface $commentRepo
          */
         $commentRepo = app(CommentRepoInterface::class);
-        /**
-         * @var Comment $comment
-         */
         $comment = $commentRepo->findById($this->route('comment'));
-        return $comment->canSeeBy($this->user());
+        return $comment->resource->canSeeBy($this->user()) && !$comment->resource->isActive();
     }
 
     /**
