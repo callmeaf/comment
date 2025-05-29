@@ -18,7 +18,7 @@ class CommentPinRequest extends FormRequest
          */
         $commentRepo = app(CommentRepoInterface::class);
         $comment = $commentRepo->findById($this->route('comment'));
-        return $comment->resource->canSeeBy($this->user()) && $comment->resource->isActive() && $comment->resource->isParent();
+        return $comment->resource->canPinBy($this->user()) && $comment->resource->isActive() && $comment->resource->isParent();
     }
 
     /**

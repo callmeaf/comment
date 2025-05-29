@@ -89,6 +89,22 @@ class Comment extends BaseModel
         return $this->author_identifier === $author;
     }
 
+    public function canPinBy($author = null): bool
+    {
+        if(is_null($author)) {
+            $author = Auth::user();
+        }
+        if($author instanceof  Model) {
+            $author = $author->getRouteKey();
+        }
+
+        $commentable = $this->commentable;
+        if(method_exists($commentable,'commentCanPinnedBy')) {
+            return $commentable->commentCanPinnedBy($author);
+        }
+        return false;
+    }
+
     public function maskedAuthorIdentifier(): Attribute
     {
         return Attribute::get(
