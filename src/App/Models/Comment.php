@@ -94,9 +94,6 @@ class Comment extends BaseModel
         if(is_null($author)) {
             $author = Auth::user();
         }
-        if($author instanceof  Model) {
-            $author = $author->getRouteKey();
-        }
 
         $commentable = $this->commentable;
         if(method_exists($commentable,'commentCanPinnedBy')) {
