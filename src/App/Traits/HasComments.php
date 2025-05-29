@@ -3,6 +3,7 @@
 namespace Callmeaf\Comment\App\Traits;
 
 use App\Models\User;
+use Callmeaf\Comment\App\Models\Comment;
 use Callmeaf\Comment\App\Repo\Contracts\CommentRepoInterface;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -36,8 +37,8 @@ trait HasComments
     abstract public function maxTotalPinnedComments(): int;
 
     /**
-     * @param null|User $author
+     * @param Comment $comment
      * @return bool
      */
-    abstract public function commentCanPinnedBy($author = null): bool;
+    abstract public function commentCanPinnedBy($comment): bool;
 }

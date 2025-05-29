@@ -91,11 +91,8 @@ class Comment extends BaseModel
         return $this->author_identifier === $author;
     }
 
-    public function canPinBy($author = null): bool
+    public function canPinBy(): bool
     {
-        if(is_null($author)) {
-            $author = Auth::user();
-        }
         /**
          * @var HasComments $commentable
          */
@@ -107,7 +104,7 @@ class Comment extends BaseModel
             throw new MaxTotalPinnedCommentException(total: $total);
         }
 
-        return $commentable->commentCanPinnedBy($author);
+        return $commentable->commentCanPinnedBy($this);
     }
 
     public function maskedAuthorIdentifier(): Attribute
