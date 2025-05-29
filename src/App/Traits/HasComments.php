@@ -31,4 +31,6 @@ trait HasComments
     {
         return $this->comments()->pendig();
     }
+
+    abstract public function maxTotalPinnedComments(): int;
 }

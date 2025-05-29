@@ -8,6 +8,8 @@ use Callmeaf\Base\App\Traits\Model\HasDate;
 use Callmeaf\Base\App\Traits\Model\HasParent;
 use Callmeaf\Base\App\Traits\Model\HasStatus;
 use Callmeaf\Base\App\Traits\Model\HasType;
+use Callmeaf\Comment\App\Exceptions\MaxTotalPinnedCommentException;
+use Callmeaf\Comment\App\Traits\HasComments;
 use Callmeaf\User\App\Repo\Contracts\UserRepoInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -94,10 +96,16 @@ class Comment extends BaseModel
         if(is_null($author)) {
             $author = Auth::user();
         }
-
+        /**
+         * @var HasComments $commentable
+         */
         $commentable = $this->commentable;
+
+        $total = $commentable->maxTotalPinnedComments();
         if(method_exists($commentable,'commentCanPinnedBy')) {
             return $commentable->commentCanPinnedBy($author);
+        } else if (request()->get('is_pinned') && $commentable->comments()->where('is_pinned',true)->count() >= $total) {
+            throw new MaxTotalPinnedCommentException(total: $total);
         }
         return false;
     }
