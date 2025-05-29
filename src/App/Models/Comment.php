@@ -102,12 +102,12 @@ class Comment extends BaseModel
         $commentable = $this->commentable;
 
         $total = $commentable->maxTotalPinnedComments();
-        if(method_exists($commentable,'commentCanPinnedBy')) {
-            return $commentable->commentCanPinnedBy($author);
-        } else if (request()->get('is_pinned') && $commentable->comments()->where('is_pinned',true)->count() >= $total) {
+
+        if (request()->get('is_pinned') && $commentable->comments()->where('is_pinned',true)->count() >= $total) {
             throw new MaxTotalPinnedCommentException(total: $total);
         }
-        return false;
+
+        return $commentable->commentCanPinnedBy($author);
     }
 
     public function maskedAuthorIdentifier(): Attribute
