@@ -25,7 +25,7 @@ class CommentUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required',new Enum(CommentType::class)],
+            'type' => ['nullable',new Enum(CommentType::class)],
             'status' => ['required',new Enum(CommentStatus::class)],
         ];
     }
