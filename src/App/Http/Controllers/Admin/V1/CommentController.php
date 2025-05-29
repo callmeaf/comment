@@ -45,7 +45,7 @@ class CommentController extends AdminController implements HasMiddleware
      */
     public function show(string $id)
     {
-        return $this->commentRepo->builder(fn(Builder $query) => $query->parent()->with([
+        return $this->commentRepo->builder(fn(Builder $query) => $query->with([
             'author.image'
         ]))->findById(value: $id);
     }
@@ -78,7 +78,7 @@ class CommentController extends AdminController implements HasMiddleware
 
     public function trashed()
     {
-        return $this->commentRepo->trashed()->latest()->builder(fn(Builder $query) => $query->parent()->with([
+        return $this->commentRepo->trashed()->latest()->builder(fn(Builder $query) => $query->with([
             'author.image'
         ]))->search()->paginate();
     }
