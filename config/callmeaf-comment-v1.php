@@ -38,7 +38,7 @@ return [
                 // listeners
             ],
             \Callmeaf\Comment\App\Events\Api\V1\CommentStatusUpdated::class => [
-                \Callmeaf\Comment\App\Listeners\Api\V1\NotifyAuthorOfCommentStatusChanged::class,
+                //
             ],
             \Callmeaf\Comment\App\Events\Api\V1\CommentTypeUpdated::class => [
                 // listeners
@@ -61,7 +61,7 @@ return [
                 // listeners
             ],
             \Callmeaf\Comment\App\Events\Web\V1\CommentStatusUpdated::class => [
-                // listeners
+                \Callmeaf\Comment\App\Listeners\Admin\V1\NotifyAuthorOfCommentStatusChanged::class,
             ],
             \Callmeaf\Comment\App\Events\Web\V1\CommentTypeUpdated::class => [
                 // listeners

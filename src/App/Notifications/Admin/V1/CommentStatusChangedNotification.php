@@ -1,10 +1,9 @@
 <?php
 
-namespace Callmeaf\Comment\App\Notifications\Api\V1;
+namespace Callmeaf\Comment\App\Notifications\Admin\V1;
 
 use Callmeaf\Comment\App\Models\Comment;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class CommentStatusChangedNotification extends Notification
@@ -60,7 +59,7 @@ class CommentStatusChangedNotification extends Notification
 //    public function toMail(object $notifiable): MailMessage
 //    {
 //        return (new MailMessage)->subject(
-//            __('callmeaf-comment::api_v1.mail.approved.subject', [
+//            __('callmeaf-comment::admin_v1.mail.approved.subject', [
 //                'comment_name' => $this->comment->name,
 //            ])
 //        )->markdown('callmeaf-comment::admin.v1.mail.strategies.approved',[
@@ -77,8 +76,8 @@ class CommentStatusChangedNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            "subject" => __('callmeaf-comment::api_v1.mail.status_changed.notification_subject'),
-            'payload' => __('callmeaf-comment::api_v1.mail.status_changed.notification_payload',[
+            "subject" => __('callmeaf-comment::admin_v1.mail.status_changed.notification_subject'),
+            'payload' => __('callmeaf-comment::admin_v1.mail.status_changed.notification_payload',[
                 'status_text' => $this->comment->statusText,
                 'commentable_title' => $this->comment->commentable->commentableTitle,
                 'comment_excerpt' => $this->comment->excerptContent(),
