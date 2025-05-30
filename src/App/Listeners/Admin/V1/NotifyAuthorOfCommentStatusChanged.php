@@ -2,9 +2,8 @@
 
 namespace Callmeaf\Comment\App\Listeners\Admin\V1;
 
-
-
 use Callmeaf\Comment\App\Events\Admin\V1\CommentStatusUpdated;
+use Callmeaf\Comment\App\Events\Admin\V1\CommentUpdated;
 use Callmeaf\Comment\App\Notifications\Admin\V1\CommentStatusChangedNotification;
 
 class NotifyAuthorOfCommentStatusChanged
@@ -20,7 +19,7 @@ class NotifyAuthorOfCommentStatusChanged
     /**
      * Handle the event.
      */
-    public function handle(CommentStatusUpdated $event): void
+    public function handle(CommentStatusUpdated|CommentUpdated $event): void
     {
         $comment = $event->comment;
         if($comment->wasChanged(['status'])) {
