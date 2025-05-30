@@ -4,7 +4,7 @@ namespace Callmeaf\Comment\App\Listeners\Admin\V1;
 
 
 
-use Callmeaf\Comment\App\Events\Api\V1\CommentStatusUpdated;
+use Callmeaf\Comment\App\Events\Admin\V1\CommentStatusUpdated;
 use Callmeaf\Comment\App\Notifications\Admin\V1\CommentStatusChangedNotification;
 
 class NotifyAuthorOfCommentStatusChanged
