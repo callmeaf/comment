@@ -79,7 +79,7 @@ class CommentStatusChangedNotification extends Notification
             "subject" => __('callmeaf-comment::admin_v1.mail.status_changed.notification_subject'),
             'payload' => __('callmeaf-comment::admin_v1.mail.status_changed.notification_payload',[
                 'status_text' => $this->comment->statusText,
-                'commentable_title' => $this->comment->commentable->commentableTitle,
+                'commentable_title' => $this->comment->commentable->commentableTitle(),
                 'comment_excerpt' => $this->comment->excerptContent(),
             ]),
         ];

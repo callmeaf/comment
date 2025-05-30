@@ -55,7 +55,7 @@ return [
                 // listeners
             ],
             \Callmeaf\Comment\App\Events\Web\V1\CommentUpdated::class => [
-                // listeners
+                \Callmeaf\Comment\App\Listeners\Admin\V1\NotifyAuthorOfCommentStatusChanged::class,
             ],
             \Callmeaf\Comment\App\Events\Web\V1\CommentDeleted::class => [
                 // listeners
