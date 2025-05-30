@@ -41,4 +41,6 @@ trait HasComments
      * @return bool
      */
     abstract public function commentCanPinnedBy($comment): bool;
+
+    abstract public function commentableTitle(): string;
 }

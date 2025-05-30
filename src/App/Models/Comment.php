@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class Comment extends BaseModel
 {
@@ -124,5 +125,10 @@ class Comment extends BaseModel
                 return str($value)->mask('*',-15,5)->toString();
             }
         );
+    }
+
+    public function excerptContent(int $limit = 30): string
+    {
+        return Str::of($this->content)->limit(30);
     }
 }
