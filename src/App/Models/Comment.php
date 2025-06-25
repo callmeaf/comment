@@ -57,7 +57,7 @@ class Comment extends BaseModel
     public function scopeOfAuthor(Builder $query,$author)
     {
         if($author instanceof  Model) {
-            $author = $author->getRouteKey();
+            $author = $author->identifier();
         }
         $query->where('author_identifier',$author);
     }
@@ -86,7 +86,7 @@ class Comment extends BaseModel
             $author = Auth::user();
         }
         if($author instanceof  Model) {
-            $author = $author->getRouteKey();
+            $author = $author->identifier();
         }
 
         return $this->author_identifier === $author;
@@ -119,7 +119,7 @@ class Comment extends BaseModel
 
                 $user = Auth::user();
 
-                if($user && $user->getRouteKey() === $value) {
+                if($user && $user->identifier() === $value) {
                     return $value;
                 }
                 return str($value)->mask('*',-15,5)->toString();
