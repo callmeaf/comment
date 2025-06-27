@@ -24,7 +24,7 @@ return new class extends Migration
 
             $table->string('commentable_id')->nullable();
             $table->string('commentable_type')->nullable();
-            $table->index(['commentable_id','commentable_type']);
+            $table->index(['commentable_type','commentable_id']);
             /**
              * @var \Callmeaf\User\App\Repo\Contracts\UserRepoInterface $userRepo
              */
